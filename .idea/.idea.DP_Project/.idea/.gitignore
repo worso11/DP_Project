@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/contentModel.xml
+/projectSettingsUpdater.xml
+/.idea.DP_Project.iml
+# Datasource local storage ignored files
+/../../../../../../../../:\Users\Worso\RiderProjects\DP_Project\.idea\.idea.DP_Project\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
