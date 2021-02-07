@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace DP_Project
 {
@@ -20,6 +22,7 @@ namespace DP_Project
         public string Name { get; set; }
         public string Category { get; set; }
         public bool Discontinued { get; set; }
+        public virtual Shop Shop { get; set; }
     }
 
     public class Shop
@@ -27,5 +30,6 @@ namespace DP_Project
         public int Id { get; set; }
         public string ShopName { get; set; }
         public string City { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
