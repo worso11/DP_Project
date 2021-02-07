@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DP_Project
 {
-    public class MainDB
+    public static class LoadManager
     {
         static void Main(string[] args)
         {
@@ -13,9 +13,9 @@ namespace DP_Project
             {
                 DbManager.DataBases.Add(new DataBase("mssql" + i));
             }
-            
+            DbManager.SetPrimary();
 
-            var context = DbManager.DataBases[1];
+            var context = DbManager.DataBases[0];
             string action = "";
             while (action != "Wyjście")
             {

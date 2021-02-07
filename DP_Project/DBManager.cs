@@ -10,7 +10,19 @@ namespace DP_Project
 
         public static void SetPrimary()
         {
-            Console.WriteLine("Dupa");
+            while (Primary == null)
+            {
+                Console.WriteLine("Searching for primary...");
+                foreach (var dataBase in DataBases)
+                {
+                    if (dataBase.IsActive)
+                    {
+                        Primary = dataBase;
+                        Primary.ChangeState(new Primary(Primary));
+                        break;
+                    }
+                }
+            }
         }
     }
 }

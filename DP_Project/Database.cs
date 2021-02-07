@@ -6,14 +6,41 @@ namespace DP_Project
 {
     public class DataBase : DbContext
     {
+        private State _state;
+        private int Version;
+        public bool IsActive = true;
+        
         public DataBase(string str) : base(str)
         {
-            
+            _state = new Secondary(this);
+            Version = 1;
+        }
+
+        public void Read()
+        {
+            _state.Read();
+        }
+        
+        public void Write()
+        {
+            _state.Write();
+        }
+        
+        public void Delete()
+        {
+            _state.Delete();
+        }
+
+        public void ChangeState(State state)
+        {
+            _state = state;
         }
         
         public DbSet<Product> Products { get; set; }
         public DbSet<Shop> Shops { get; set; }
     }
+    
+    
     
     public class Product
     {
