@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DP_Project.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<DP_Project.ProjectDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<DP_Project.DataBase>
     {
         public Configuration()
         {

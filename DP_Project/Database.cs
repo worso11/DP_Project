@@ -4,10 +4,9 @@ using System.Data.Entity;
 
 namespace DP_Project
 {
-    public class ProjectDbContext : DbContext
+    public class DataBase : DbContext
     {
-        public ProjectDbContext()
-        :base("mssql")
+        public DataBase(string str) : base(str)
         {
             
         }

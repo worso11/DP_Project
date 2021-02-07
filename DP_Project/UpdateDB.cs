@@ -4,7 +4,7 @@ namespace DP_Project
 {
     public class UpdateDB
     {
-        public static void Add(ProjectDbContext ctx)
+        public static void Add(DataBase ctx)
         {
             Console.WriteLine("Podaj nazwę produktu: ");
             string name = Console.ReadLine();
@@ -34,7 +34,7 @@ namespace DP_Project
             ctx.SaveChanges();
         }
 
-        public static void Delete(ProjectDbContext ctx)
+        public static void Delete(DataBase ctx)
         {
             Console.WriteLine("Podaj id produktu do usunięcia: ");
             string inputId = Console.ReadLine();
