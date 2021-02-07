@@ -41,6 +41,7 @@
           <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
           <Private>True</Private>
         </Reference>
+        <Reference Include="mscorlib" />
         <Reference Include="System" />
         <Reference Include="System.ComponentModel.DataAnnotations" />
         <Reference Include="System.Core" />
@@ -49,6 +50,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Class1.cs" />
+        <Compile Include="Migrations\Configuration.cs" />
         <Compile Include="ProjectDbContext.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
