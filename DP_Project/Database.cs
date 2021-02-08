@@ -9,11 +9,13 @@ namespace DP_Project
         public State State;
         public int Version;
         public bool IsActive = true;
+        public string name;
         
         public DataBase(string str) : base(str)
         {
             State = new Secondary(this);
             Version = 1;
+            name = str;
         }
 
         public void Read()

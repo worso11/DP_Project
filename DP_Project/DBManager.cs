@@ -14,11 +14,12 @@ namespace DP_Project
             Primary = null;
             while (Primary == null)
             {
-                Console.WriteLine("Searching for primary...");
+                Console.WriteLine("### Searching for primary... ###");
                 foreach (var dataBase in DataBases.Where(dataBase => dataBase.IsActive))
                 {
                     Primary = dataBase;
                     Primary.ChangeState(new Primary(Primary));
+                    Console.WriteLine("### Baza " + dataBase.name + " przechodzi w stan Primary###");
                     break;
                 }
             }

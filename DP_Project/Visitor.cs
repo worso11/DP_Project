@@ -1,4 +1,6 @@
-﻿namespace DP_Project
+﻿using System;
+
+namespace DP_Project
 {
     public static class Visitor
     {
@@ -13,6 +15,7 @@
         {
             if (dataBase.IsActive) return;
             
+            Console.WriteLine("### Baza " + dataBase.name + " przechodzi w stan Inactive###");
             dataBase.State = new Inactive(dataBase);
             DbManager.SetPrimary();
         }
@@ -21,6 +24,7 @@
         {
             if (dataBase.IsActive) return;
             
+            Console.WriteLine("### Baza " + dataBase.name + " przechodzi w stan Inactive###");
             dataBase.State = new Inactive(dataBase);
         }
         
@@ -28,6 +32,7 @@
         {
             if (!dataBase.IsActive) return;
             
+            Console.WriteLine("### Baza " + dataBase.name + " przechodzi w stan Secondary###");
             dataBase.State = new Secondary(dataBase);
         }
     }

@@ -11,7 +11,7 @@ namespace DP_Project
             string name = Console.ReadLine();
             Console.WriteLine("Podaj nazwę kategorii: ");
             string category = Console.ReadLine();
-            Console.WriteLine("Czy produkt jest na przecenie? (T/N): ");
+            Console.WriteLine("Czy produkt został porzucony? (T/N): ");
             string isDisc = Console.ReadLine();
             bool disc = false;
             while (isDisc != "T" && isDisc != "N")
@@ -32,6 +32,8 @@ namespace DP_Project
             };
             ctx.Products.Add(product);
             ctx.SaveChanges();
+            Console.WriteLine("Ilość pozycji: " + ctx.Products.Count());
+            Console.WriteLine("### Zapisano do bazy " + ctx.name + " ###");
             ctx.Version += 1;
 
             return product;
@@ -41,8 +43,10 @@ namespace DP_Project
         {
             foreach (var dataBase in DbManager.DataBases.Where(dataBase => dataBase != DbManager.Primary))
             {
+                dataBase.Database.Initialize(true);
                 dataBase.Products.Add(product);
                 dataBase.SaveChanges();
+                Console.WriteLine("### Zapisano do bazy " + dataBase.name + " ###");
                 dataBase.Version += 1;
             }
         }
@@ -52,21 +56,17 @@ namespace DP_Project
             Console.WriteLine("Podaj id produktu do usunięcia: ");
             string inputId = Console.ReadLine();
             int id;
-            while(!Int32.TryParse(inputId, out id))
+            var product = new Product();
+            while(!Int32.TryParse(inputId, out id) || ctx.Products.Find(id) == null)
             {
-                Console.WriteLine("Niepoprawna odpowiedź, wpisz liczbę:");
+                Console.WriteLine("Niepoprawna odpowiedź, wpisz prawidłową liczbę:");
                 inputId = Console.ReadLine();
             }
-            
-            ctx.Database.Initialize(true);
-            var product = new Product()
-            {
-                Id = id
-            };
-            
-            ctx.Products.Attach(product);
+
+            product = ctx.Products.Find(id);
             ctx.Products.Remove(product);
             ctx.SaveChanges();
+            Console.WriteLine("### Usunięto z bazy " + ctx.name + " ###");
             ctx.Version += 1;
 
             return product;
@@ -76,9 +76,11 @@ namespace DP_Project
         {
             foreach (var dataBase in DbManager.DataBases.Where(dataBase => dataBase != DbManager.Primary))
             {
+                dataBase.Database.Initialize(true);
                 dataBase.Products.Attach(product);
                 dataBase.Products.Remove(product);
                 dataBase.SaveChanges();
+                Console.WriteLine("### Usunięto z bazy " + dataBase.name + " ###");
                 dataBase.Version += 1;
             }
         }
