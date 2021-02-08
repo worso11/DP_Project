@@ -1,15 +1,21 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Net.Sockets;
-using DP_Project.Migrations;
+using System.Collections.Generic;
 
 namespace DP_Project
 {
-    public class Class1
+    public static class LoadManager
     {
         static void Main(string[] args)
         {
-            var context = new ProjectDbContext();
+            DbManager.DataBases = new List<DataBase>();
+            
+            for (var i = 0; i < 2; i++)
+            {
+                DbManager.DataBases.Add(new DataBase("mssql" + i));
+            }
+            DbManager.SetPrimary();
+
+            var context = DbManager.DataBases[0];
             string action = "";
             while (action != "Wyjście")
             {
@@ -31,7 +37,7 @@ namespace DP_Project
                 }
             }
 
-            System.Console.WriteLine("Koniec działania programu");
+            Console.WriteLine("Koniec działania programu");
         }
     }
 }
