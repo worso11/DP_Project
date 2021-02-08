@@ -2,7 +2,7 @@
 {
     public abstract class State
     {
-        protected DataBase Parent;
+        protected readonly DataBase Parent;
 
         protected State(DataBase par)
         {
@@ -12,5 +12,8 @@
         public abstract void Read();
         public abstract void Write();
         public abstract void Delete();
+
+        public abstract void AcceptVisitor();
+
     }
 }

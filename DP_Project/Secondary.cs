@@ -7,10 +7,17 @@ namespace DP_Project
         public Secondary(DataBase par) : base(par){}
         public override void Read()
         {
-            Console.WriteLine("Products:");
-            foreach (var product in Parent.Products)
+            if (Parent.Version == DbManager.Primary.Version)
             {
-                Console.WriteLine(product.Name + " z kategorii " + product.Category);
+                Console.WriteLine("Products:");
+                foreach (var product in Parent.Products)
+                {
+                    Console.WriteLine(product.Name + " z kategorii " + product.Category);
+                }
+            }
+            else
+            {
+                LoadBalancer.GetBase().Read();
             }
         }
 
@@ -22,6 +29,11 @@ namespace DP_Project
         public override void Delete()
         {
             Console.Write("It should not have happened");
+        }
+
+        public override void AcceptVisitor()
+        {
+            Visitor.VisitSecondary(Parent);
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Linq;
 
 namespace DP_Project
 {
-    public class UpdateDB
+    public static class UpdateDb
     {
-        public static void Add(DataBase ctx)
+        public static Product Add(DataBase ctx)
         {
             Console.WriteLine("Podaj nazwę produktu: ");
             string name = Console.ReadLine();
@@ -22,7 +23,6 @@ namespace DP_Project
             {
                 disc = true;
             }
-            
             ctx.Database.Initialize(true);
             var product = new Product()
             {
@@ -32,9 +32,22 @@ namespace DP_Project
             };
             ctx.Products.Add(product);
             ctx.SaveChanges();
+            ctx.Version += 1;
+
+            return product;
         }
 
-        public static void Delete(DataBase ctx)
+        public static void Add(Product product)
+        {
+            foreach (var dataBase in DbManager.DataBases.Where(dataBase => dataBase != DbManager.Primary))
+            {
+                dataBase.Products.Add(product);
+                dataBase.SaveChanges();
+                dataBase.Version += 1;
+            }
+        }
+
+        public static Product Delete(DataBase ctx)
         {
             Console.WriteLine("Podaj id produktu do usunięcia: ");
             string inputId = Console.ReadLine();
@@ -54,6 +67,20 @@ namespace DP_Project
             ctx.Products.Attach(product);
             ctx.Products.Remove(product);
             ctx.SaveChanges();
+            ctx.Version += 1;
+
+            return product;
+        }
+        
+        public static void Delete(Product product)
+        {
+            foreach (var dataBase in DbManager.DataBases.Where(dataBase => dataBase != DbManager.Primary))
+            {
+                dataBase.Products.Attach(product);
+                dataBase.Products.Remove(product);
+                dataBase.SaveChanges();
+                dataBase.Version += 1;
+            }
         }
     }
 }
