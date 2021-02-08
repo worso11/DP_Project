@@ -20,5 +20,10 @@ namespace DP_Project
         {
             throw new System.NotImplementedException();
         }
+
+        public override void AcceptVisitor()
+        {
+            Visitor.VisitInactive(Parent);
+        }
     }
 }

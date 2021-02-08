@@ -23,7 +23,6 @@ namespace DP_Project
             {
                 disc = true;
             }
-            
             ctx.Database.Initialize(true);
             var product = new Product()
             {

@@ -31,6 +31,11 @@ namespace DP_Project
             State.Delete();
         }
 
+        public void AcceptVisitor()
+        {
+            State.AcceptVisitor();
+        }
+
         public void ChangeState(State state)
         {
             State = state;

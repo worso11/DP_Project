@@ -12,5 +12,8 @@
         public abstract void Read();
         public abstract void Write();
         public abstract void Delete();
+
+        public abstract void AcceptVisitor();
+
     }
 }

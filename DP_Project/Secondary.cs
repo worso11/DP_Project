@@ -17,7 +17,7 @@ namespace DP_Project
             }
             else
             {
-                Update();
+                LoadBalancer.GetBase().Read();
             }
         }
 
@@ -31,9 +31,9 @@ namespace DP_Project
             Console.Write("It should not have happened");
         }
 
-        private void Update()
+        public override void AcceptVisitor()
         {
-            throw new NotImplementedException();
+            Visitor.VisitSecondary(Parent);
         }
     }
 }

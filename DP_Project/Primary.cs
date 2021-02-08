@@ -20,5 +20,10 @@ namespace DP_Project
         {
             UpdateDb.Delete(UpdateDb.Delete(Parent));
         }
+
+        public override void AcceptVisitor()
+        {
+            Visitor.VisitPrimary(Parent);
+        }
     }
 }

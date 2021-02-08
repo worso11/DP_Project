@@ -2,22 +2,22 @@
 {
     public static class LoadBalancer
     {
-        private static int _counter = 0;
+        private static int _roundRobinIndex;
         
         public static DataBase GetBase()
         {
             while (true)
             {
                 IncrementCounter();
-                if (DbManager.DataBases[_counter].State.GetType() == typeof(Secondary)) break;
+                if (DbManager.DataBases[_roundRobinIndex].State.GetType() == typeof(Secondary)) break;
             }
-            return DbManager.DataBases[_counter];
+            return DbManager.DataBases[_roundRobinIndex];
         }
 
         private static void IncrementCounter()
         {
-            _counter++;
-            if (_counter >= DbManager.DataBases.Count) _counter = 0;
+            _roundRobinIndex++;
+            if (_roundRobinIndex >= DbManager.DataBases.Count) _roundRobinIndex = 0;
         }
     }
 }

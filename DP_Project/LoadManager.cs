@@ -5,7 +5,7 @@ namespace DP_Project
 {
     public static class LoadManager
     {
-        static void Main(string[] args)
+        static void Main()
         {
             DbManager.DataBases = new List<DataBase>();
             
@@ -18,6 +18,7 @@ namespace DP_Project
             var action = "";
             while (action != "Wyjście")
             {
+                Visitor.Visit();
                 Console.WriteLine("Podaj akcję:\n - Dodawanie\n - Usuwanie\n - Odczyt \n - Wyjście");
                 action = Console.ReadLine();
                 
