@@ -2,9 +2,9 @@
 
 namespace DP_Project
 {
-    public class Primary : State
+    public class Inactive : State
     {
-        public Primary(DataBase par) : base(par){}
+        public Inactive(DataBase par) : base(par){}
 
         public override void Read()
         {
@@ -13,17 +13,17 @@ namespace DP_Project
 
         public override void Write()
         {
-            UpdateDb.Add(UpdateDb.Add(Parent));
+            throw new System.NotImplementedException();
         }
 
         public override void Delete()
         {
-            UpdateDb.Delete(UpdateDb.Delete(Parent));
+            throw new System.NotImplementedException();
         }
 
         public override void AcceptVisitor()
         {
-            Visitor.VisitPrimary(Parent);
+            Visitor.VisitInactive(Parent);
         }
     }
 }
