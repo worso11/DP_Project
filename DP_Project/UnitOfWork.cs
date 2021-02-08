@@ -8,6 +8,6 @@
     
     public class UnitOfWork
     {
-        
+        // TODO: Zrobić UnitofWork
     }
 }

@@ -9,6 +9,7 @@ namespace DP_Project
         {
             if (Parent.Version == DbManager.Primary.Version)
             {
+                Console.WriteLine("### Odczyt z bazy " + Parent.name + " ###");
                 Console.WriteLine("Products:");
                 foreach (var product in Parent.Products)
                 {
