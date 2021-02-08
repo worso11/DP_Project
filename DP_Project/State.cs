@@ -2,7 +2,7 @@
 {
     public abstract class State
     {
-        protected DataBase Parent;
+        protected readonly DataBase Parent;
 
         protected State(DataBase par)
         {

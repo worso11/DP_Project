@@ -49,6 +49,7 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Inactive.cs" />
         <Compile Include="LoadBalancer.cs" />
         <Compile Include="LoadManager.cs" />
         <Compile Include="DBManager.cs" />

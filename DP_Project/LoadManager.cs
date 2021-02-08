@@ -15,28 +15,34 @@ namespace DP_Project
             }
             DbManager.SetPrimary();
 
-            var context = DbManager.DataBases[0];
-            string action = "";
+            var action = "";
             while (action != "Wyjście")
             {
                 Console.WriteLine("Podaj akcję:\n - Dodawanie\n - Usuwanie\n - Odczyt \n - Wyjście");
                 action = Console.ReadLine();
-                if (action == "Dodawanie")
+                
+                switch (action)
                 {
-                    UpdateDB.Add(context);
-                } else if (action == "Usuwanie")
-                {
-                    UpdateDB.Delete(context);
-                }else if (action == "Odczyt")
-                {
-                    Console.WriteLine("Produkty:");
-                    foreach (var product in context.Products) {Console.WriteLine(product.Name + " z kategorii " + product.Category);}
-                }else if (action != "Wyjście")
-                {
-                    Console.WriteLine("Nie ma takiej komendy");
+                    case "Dodawanie":
+                        DbManager.Primary.Write();
+                        break;
+                    case "Usuwanie":
+                        DbManager.Primary.Delete();
+                        break;
+                    case "Odczyt":
+                        LoadBalancer.GetBase().Read();
+                        break;
+                    default:
+                    {
+                        if (action != "Wyjście")
+                        {
+                            Console.WriteLine("Nie ma takiej komendy");
+                        }
+
+                        break;
+                    }
                 }
             }
-
             Console.WriteLine("Koniec działania programu");
         }
     }
