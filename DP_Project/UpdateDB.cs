@@ -29,6 +29,7 @@ namespace DP_Project
                 Name = name,
                 Category = category,
                 Discontinued = disc
+                //Shop = ctx.Shops.Single(c => c.ShopName == "Nasz sklep")
             };
             ctx.Products.Add(product);
             ctx.SaveChanges();
@@ -43,15 +44,23 @@ namespace DP_Project
         {
             foreach (var dataBase in DbManager.DataBases.Where(dataBase => dataBase != DbManager.Primary))
             {
-                dataBase.Database.Initialize(true);
-                dataBase.Products.Add(product);
-                dataBase.SaveChanges();
-                Console.WriteLine("### Zapisano do bazy " + dataBase.name + " ###");
-                dataBase.Version += 1;
+                if (dataBase.State.GetType() == typeof(Inactive))
+                {
+                    dataBase.Unit.AddToQueue((new Tuple<Product,int>(product,0)));
+                }
+                else
+                {
+                    //product.Shop = dataBase.Shops.Single(c => c.ShopName == "Nasz sklep");
+                    dataBase.Database.Initialize(true);
+                    dataBase.Products.Add(product);
+                    dataBase.SaveChanges();
+                    Console.WriteLine("### Zapisano do bazy " + dataBase.name + " ###");
+                    dataBase.Version += 1;
+                }
             }
         }
 
-        public static Product Delete(DataBase ctx)
+        public static int Delete(DataBase ctx)
         {
             Console.WriteLine("Podaj id produktu do usunięcia: ");
             string inputId = Console.ReadLine();
@@ -63,25 +72,35 @@ namespace DP_Project
                 inputId = Console.ReadLine();
             }
 
+            ctx.Database.Initialize(true);
             product = ctx.Products.Find(id);
             ctx.Products.Remove(product);
             ctx.SaveChanges();
             Console.WriteLine("### Usunięto z bazy " + ctx.name + " ###");
             ctx.Version += 1;
 
-            return product;
+            return id;
         }
         
-        public static void Delete(Product product)
+        public static void Delete(int id)
         {
             foreach (var dataBase in DbManager.DataBases.Where(dataBase => dataBase != DbManager.Primary))
             {
-                dataBase.Database.Initialize(true);
-                dataBase.Products.Attach(product);
-                dataBase.Products.Remove(product);
-                dataBase.SaveChanges();
-                Console.WriteLine("### Usunięto z bazy " + dataBase.name + " ###");
-                dataBase.Version += 1;
+                Product product = new Product();
+                if (dataBase.State.GetType() == typeof(Inactive))
+                {
+                    dataBase.Unit.AddToQueue((new Tuple<Product,int>(product,id)));
+                }
+                else
+                {
+                    dataBase.Database.Initialize(true);
+                    product = dataBase.Products.Find(id);
+                    dataBase.Products.Attach(product);
+                    dataBase.Products.Remove(product);
+                    dataBase.SaveChanges();
+                    Console.WriteLine("### Usunięto z bazy " + dataBase.name + " ###");
+                    dataBase.Version += 1;
+                }
             }
         }
     }

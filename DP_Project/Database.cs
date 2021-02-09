@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
+using System.Linq;
 
 namespace DP_Project
 {
@@ -10,6 +12,7 @@ namespace DP_Project
         public int Version;
         public bool IsActive = true;
         public string name;
+        public UnitOfWork Unit = new UnitOfWork();
         
         public DataBase(string str) : base(str)
         {
