@@ -9,7 +9,7 @@ namespace DP_Project
         {
             DbManager.DataBases = new List<DataBase>();
             
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < 5; i++)
             {
                 DataBase db = new DataBase("mssql" + i);
                 DbManager.DataBases.Add(db);
@@ -19,13 +19,14 @@ namespace DP_Project
                 }
                 Console.WriteLine("mssql" + i +":" + db.Database.Exists());
             }
+
+            int k = 0;
             DbManager.SetPrimary();
             var action = "";
             DbManager.DataBases[0].IsActive = false;
             while (action != "Wyjście")
             {
                 Visitor.Visit();
-                DbManager.DataBases[0].IsActive = true;
                 Console.WriteLine("--------------------");
                 Console.WriteLine("Podaj akcję:\n - Dodawanie\n - Usuwanie\n - Odczyt \n - Wyjście");
                 Console.WriteLine("--------------------");
@@ -52,6 +53,13 @@ namespace DP_Project
                         break;
                     }
                 }
+
+                if (k == 2)
+                {
+                    DbManager.DataBases[0].IsActive = true;
+                }
+
+                k += 1;
             }
             Console.WriteLine("Koniec działania programu");
         }

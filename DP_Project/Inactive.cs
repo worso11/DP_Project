@@ -13,12 +13,12 @@ namespace DP_Project
 
         public override void Write()
         {
-            throw new System.NotImplementedException();
+            Console.Write("It should not have happened");
         }
 
         public override void Delete()
         {
-            throw new System.NotImplementedException();
+            Console.Write("It should not have happened");
         }
 
         public override void AcceptVisitor()
