@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 
 namespace DP_Project
 {
@@ -9,7 +11,7 @@ namespace DP_Project
         {
             DbManager.DataBases = new List<DataBase>();
             
-            for (var i = 0; i < 5; i++)
+            for (var i = 0; i < 6; i++)
             {
                 DataBase db = new DataBase("mssql" + i);
                 DbManager.DataBases.Add(db);
@@ -19,14 +21,13 @@ namespace DP_Project
                 }
                 Console.WriteLine("mssql" + i +":" + db.Database.Exists());
             }
-
-            int k = 0;
+            
             DbManager.SetPrimary();
             var action = "";
-            DbManager.DataBases[0].IsActive = false;
+            Thread visiting = new Thread(new ThreadStart(WatchDog.Check));
+            visiting.Start();
             while (action != "Wyjście")
             {
-                Visitor.Visit();
                 Console.WriteLine("--------------------");
                 Console.WriteLine("Podaj akcję:\n - Dodawanie\n - Usuwanie\n - Odczyt \n - Wyjście");
                 Console.WriteLine("--------------------");
@@ -43,25 +44,17 @@ namespace DP_Project
                     case "Odczyt":
                         LoadBalancer.GetBase().Read();
                         break;
+                    case "Wyjście":
+                        Console.WriteLine("Koniec działania programu");
+                        visiting.Abort();
+                        return;
                     default:
                     {
-                        if (action != "Wyjście")
-                        {
-                            Console.WriteLine("Nie ma takiej komendy");
-                        }
-
+                        Console.WriteLine("Nie ma takiej komendy");
                         break;
                     }
                 }
-
-                if (k == 2)
-                {
-                    DbManager.DataBases[0].IsActive = true;
-                }
-
-                k += 1;
             }
-            Console.WriteLine("Koniec działania programu");
         }
     }
 }

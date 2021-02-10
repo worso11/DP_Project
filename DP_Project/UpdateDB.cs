@@ -5,6 +5,7 @@ namespace DP_Project
 {
     public static class UpdateDb
     {
+        // Funkcja dodająca wybrany produkt do Primary DB
         public static Product Add(DataBase ctx)
         {
             Console.WriteLine("Podaj nazwę produktu: ");
@@ -29,7 +30,6 @@ namespace DP_Project
                 Name = name,
                 Category = category,
                 Discontinued = disc
-                //Shop = ctx.Shops.Single(c => c.ShopName == "Nasz sklep")
             };
             ctx.Products.Add(product);
             ctx.SaveChanges();
@@ -40,17 +40,19 @@ namespace DP_Project
             return product;
         }
 
+        // Funkcja dodająca wybrany produkt do pozostałych baz danych
         public static void Add(Product product)
         {
             foreach (var dataBase in DbManager.DataBases.Where(dataBase => dataBase != DbManager.Primary))
             {
+                // W przypadku bazy danych w stanie Inactive wysyłany jest odpowiedni sygnał do Unit of Work
                 if (dataBase.State.GetType() == typeof(Inactive))
                 {
                     dataBase.Unit.AddToQueue((new Tuple<Product,int>(product,0)));
                 }
+                // Dla baz w stanie Secondary produkt zostaje dopisany
                 else
                 {
-                    //product.Shop = dataBase.Shops.Single(c => c.ShopName == "Nasz sklep");
                     dataBase.Database.Initialize(true);
                     dataBase.Products.Add(product);
                     dataBase.SaveChanges();
@@ -60,6 +62,7 @@ namespace DP_Project
             }
         }
 
+        // Funkcja usuwająca wybrany produkt z Primary DB
         public static int Delete(DataBase ctx)
         {
             Console.WriteLine("Podaj id produktu do usunięcia: ");
@@ -82,15 +85,19 @@ namespace DP_Project
             return id;
         }
         
+        // Funkcja usuwająca wybrany produkt z pozostałych baz danych
         public static void Delete(int id)
         {
             foreach (var dataBase in DbManager.DataBases.Where(dataBase => dataBase != DbManager.Primary))
             {
                 Product product = new Product();
+                
+                // W przypadku bazy danych w stanie Inactive wysyłany jest odpowiedni sygnał do Unit of Work
                 if (dataBase.State.GetType() == typeof(Inactive))
                 {
                     dataBase.Unit.AddToQueue((new Tuple<Product,int>(product,id)));
                 }
+                // Dla baz w stanie Secondary produkt zostaje usunięty
                 else
                 {
                     dataBase.Database.Initialize(true);
