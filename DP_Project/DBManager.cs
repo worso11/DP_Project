@@ -4,11 +4,13 @@ using System.Linq;
 
 namespace DP_Project
 {
+    // Klasa zarządzająca bazami danych
     public static class DbManager
     {
         public static DataBase Primary;
         public static List<DataBase> DataBases;
 
+        // Funkcja ustawiająca bazę danych na stan Primary
         public static void SetPrimary()
         {
             Primary = null;
@@ -19,7 +21,7 @@ namespace DP_Project
                 {
                     Primary = dataBase;
                     Primary.ChangeState(new Primary(Primary));
-                    Console.WriteLine("### Baza " + dataBase.name + " przechodzi w stan Primary###");
+                    Console.WriteLine("### Baza " + dataBase.name + " przechodzi w stan Primary ###");
                     break;
                 }
             }

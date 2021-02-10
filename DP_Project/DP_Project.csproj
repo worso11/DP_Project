@@ -62,6 +62,7 @@
         <Compile Include="UnitOfWork.cs" />
         <Compile Include="UpdateDB.cs" />
         <Compile Include="Visitor.cs" />
+        <Compile Include="WatchDog.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="App.config" />
